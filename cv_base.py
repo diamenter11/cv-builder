@@ -64,7 +64,8 @@ def generate(data_file, out_file):
     # Photo
     photo=Image.open('/home/claude/photo_cv.png').convert('RGB')
     pw,ph=92,112; buf=io.BytesIO()
-    photo.resize((pw,ph),Image.LANCZOS).save(buf,'JPEG',quality=75,optimize=True); buf.seek(0)
+    # Embed at high resolution (no downscale) — ReportLab scales visually, stays sharp
+    photo.save(buf,'JPEG',quality=95,optimize=True); buf.seek(0)
     px=(SW-pw)/2; py=H-14-ph
     c.drawImage(ImageReader(buf),px,py,width=pw,height=ph,preserveAspectRatio=True,mask='auto')
     c.setStrokeColorRGB(*GOLD); c.setLineWidth(1.2); c.rect(px,py,pw,ph,fill=0,stroke=1)
